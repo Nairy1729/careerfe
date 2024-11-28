@@ -1,0 +1,68 @@
+.company-list {
+  display: flex;
+  flex-direction: column;  /* Stack companies vertically */
+  align-items: center;     /* Center the cards horizontally */
+  padding: 100px;
+}
+
+.company-card {
+  display: flex;            /* Align content horizontally */
+  flex-direction: row;      /* Ensures the content is in a row (horizontal) */
+  align-items: center;      /* Vertically center the content */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;           /* Add vertical space between cards */
+  width: 100%;              /* Full width of the parent container */
+  max-width: 1200px;        /* Limit the maximum width of each card */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.company-card:hover {
+  transform: scale(1.05);    /* Slightly increase the card size on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* More prominent shadow on hover */
+}
+
+.company-card img {
+  width: 120px;              /* Set a fixed width for the logo */
+  height: 120px;             /* Set a fixed height for the logo */
+  object-fit: cover;         /* Ensure the image fills the space without distortion */
+  border-radius: 50%;        /* Make the logo circular */
+  margin-right: 20px;        /* Add space between image and text */
+}
+
+.company-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;               /* Dark color for the heading */
+}
+
+.company-card p {
+  color: #555;               /* Lighter color for paragraph text */
+  margin-bottom: 8px;
+}
+
+.company-card button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.company-card button:hover {
+  background-color: #218838;
+}
+
+.company-card a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.company-card a:hover {
+  text-decoration: underline;
+}

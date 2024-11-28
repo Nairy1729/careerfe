@@ -1,0 +1,110 @@
+/* Main container styles */
+.login-page {
+    display: flex;
+    height: 100vh;
+    background-color: hsl(0, 0%, 96%);
+    font-family: Arial, sans-serif;
+    box-sizing: border-box; /* Ensure padding and border are included in the element's width and height */
+}
+
+/* Left section styles */
+/* Left section styles */
+.left-section2 {
+    flex: 1;
+    background-image: url('C:\Users\nairy\reacter\React_jwt-auth__Hexa_Oct_24\public\ph2.avif'); /* Replace with your image path */
+    background-size: cover; /* Ensure the image covers the section */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Avoid tiling */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+
+/* Right section styles */
+.right-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px; /* Ensure a fixed width constraint */
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.card-title {
+    color: #335A99;
+    padding-bottom: 10px;
+}
+
+/* Form and input adjustments */
+.form-group {
+    margin-bottom: 20px;
+    width: 100%; /* Ensure inputs span the full container width */
+}
+
+.form-control {
+    width: 100%; /* Full width of form container */
+    max-width: 100%; /* Ensure no overflow */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    width: 100%; /* Button spans the container */
+    padding: 10px;
+    background-color: #218838;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: hsl(217, 50%, 40%);
+}
+
+@media (max-width: 768px) {
+    .login-page {
+        flex-direction: column;
+    }
+
+    .left-section, .right-section {
+        flex: none;
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+.signup-text {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+}
+
+.signup-link {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.signup-link:hover {
+    color: #0056b3;
+}
