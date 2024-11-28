@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
@@ -44,7 +44,7 @@ const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="register-page">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="left-section1">
         <h2>Welcome to Registration</h2>
         <p>Create your account to access all features.</p>

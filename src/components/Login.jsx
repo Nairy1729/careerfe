@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../AuthContext";
 import { login as loginService } from "../Services/AuthService";
-import { toast } from "react-toastify";
+import { toast  } from "react-toastify";
 import "./Login.css";
 
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
       const token = await loginService(username, password);
       login(token);
       toast.success("Login Successful!");
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       if (error.response && error.response.status === 401) {
         toast.error("Invalid credentials");
@@ -30,6 +30,7 @@ const Login = () => {
 
   return (
     <div className="login-page">
+      {/* <ToastContainer /> */}
       <div className="left-section2">
         <h1 className="title">
           Welcome Back!
