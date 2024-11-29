@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../AuthContext";
+import ProfileMenu from "./ProfileMenu"; // Import your ProfileMenu component
 import './Header.css'; // Import the new Header.css
 
 const Header = () => {
@@ -35,11 +36,11 @@ const Header = () => {
           ) : (
             <>
               <li>
-                <button onClick={handleLogout}>Logout</button>
-              </li>
-              <li>
                 <Link to="/company">Company</Link>
               </li>
+              <div>
+                <ProfileMenu /> {/* Render the ProfileMenu component here */}
+              </div>
             </>
           )}
         </ul>

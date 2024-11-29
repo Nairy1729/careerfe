@@ -80,11 +80,13 @@ header .logo img {
     list-style-type: none;
     padding: 0;
     display: flex;
-    gap: 20px; /* Space out the nav items */
+    margin-right: 70px;
+     /* Space out the nav items */
   }
   
   header nav ul li {
     display: inline;
+    gap:10px;
   }
   
   header nav ul li a {

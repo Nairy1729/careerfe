@@ -170,3 +170,83 @@
     width: 18px;
     height: 18px;
 }
+
+.required {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  .username-available {
+    color: green;
+    margin-top: 5px;
+  }
+  .username-taken {
+    color: red;
+    margin-top: 5px;
+  }
+  .check-availability-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  .username-available {
+    border: 2px solid green;
+  }
+  
+  /* Red border for taken username */
+  .username-taken {
+    border: 2px solid red;
+  }
+
+
+  /* Username container with flex layout */
+.username-container {
+    display: flex;
+    align-items: center;
+    position: relative; /* Ensures better positioning control */
+  }
+  
+  /* Input field styling with flexibility */
+  .form-control {
+    flex: 1; /* Makes the input field occupy the remaining space */
+    padding: 12px 14px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  /* Check Availability button styling */
+  .check-availability-btn {
+    margin-left: 5px; /* Ensures proper spacing from the input */
+    padding-left: 0%;
+    padding-top: 0%;
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    background-color: hsl(217, 50%, 50%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Prevents text wrapping */
+  }
+  
+  .check-availability-btn:hover {
+    background-color: hsl(217, 50%, 40%);
+  }
+  
+  /* Adjust input field's border color based on availability */
+  .username-available {
+    border-color: green;
+  }
+  
+  .username-taken {
+    border-color: red;
+  }
+  
+  
+  

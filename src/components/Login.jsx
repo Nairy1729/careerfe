@@ -2,35 +2,52 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../AuthContext";
 import { login as loginService } from "../Services/AuthService";
-import { toast  } from "react-toastify";
+import { usePersonContext } from "../Services/PersonContext"; // Import PersonContext
+import { toast } from "react-toastify";
+import axios from "axios"; // For API call
 import "./Login.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
+  const { setUserInfo } = usePersonContext(); // Destructure setUserInfo
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Step 1: Log in to get the token
       const token = await loginService(username, password);
+
+      // Save token to AuthContext
       login(token);
+
+      // Step 2: Fetch user info using the token and username
+      const response = await axios.get(
+        `https://localhost:7060/api/Person/search/username?userName=${username}`
+      );
+
+      // Step 3: Save user info in PersonContext
+      setUserInfo(response.data);
+      //console.log(response.data) ;
+
       toast.success("Login Successful!");
       navigate("/");
     } catch (error) {
       if (error.response && error.response.status === 401) {
         toast.error("Invalid credentials");
+      } else if (error.response && error.response.status === 404) {
+        toast.error("User not found");
       } else {
         toast.error("An unexpected error occurred");
       }
     }
   };
-  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="login-page">
-      {/* <ToastContainer /> */}
       <div className="left-section2">
         <h1 className="title">
           Welcome Back!
@@ -57,50 +74,37 @@ const Login = () => {
                 placeholder="Enter your username"
               />
             </div>
-            {/* <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-control"
-                placeholder="Enter your password"
-              />
-            </div> */}
 
-
-<div className="form-group">
-  <label>Password</label>
-  <div className="password-container">
-    <input
-      type={showPassword ? "text" : "password"}
-      name="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      placeholder="Password"
-      className="form-control password-input"
-    />
-    <button
-      type="button"
-      onClick={() => setShowPassword((prev) => !prev)}
-      className="toggle-password"
-      aria-label="Toggle password visibility"
-    >
-      {showPassword ? (
-        <i className="fa fa-eye-slash"></i> /* Eye-slash icon when visible */
-      ) : (
-        <i className="fa fa-eye"></i> /* Eye icon when hidden */
-      )}
-    </button>
-  </div>
-</div>
+            <div className="form-group">
+              <label>Password</label>
+              <div className="password-container">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  className="form-control password-input"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="toggle-password"
+                  aria-label="Toggle password visibility"
+                >
+                  {showPassword ? (
+                    <i className="fa fa-eye-slash"></i> // Eye-slash icon when visible
+                  ) : (
+                    <i className="fa fa-eye"></i> // Eye icon when hidden
+                  )}
+                </button>
+              </div>
+            </div>
 
             <button type="submit" className="btn btn-primary">
               Login
             </button>
 
-            {/* Link to Sign Up */}
             <p className="signup-text">
               Not registered?{" "}
               <span

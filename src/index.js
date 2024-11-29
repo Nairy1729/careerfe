@@ -4,10 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Import the PersonProvider
+import { PersonProvider } from './Services/PersonContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    {/* Wrap App with PersonProvider */}
+    <PersonProvider>
+      <App />
+    </PersonProvider>
   </React.StrictMode>
 );
 

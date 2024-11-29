@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import CompanyList from "./components/CompanyList";
 import Home from "./components/Home ";
+import ProfileMenu from "./components/ProfileMenu";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/company" element={<CompanyList />} />
+          <Route path="/company" element={<CompanyList />} />
           </Route>
         </Routes>
         <Footer />
