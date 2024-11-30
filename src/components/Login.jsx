@@ -18,20 +18,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Step 1: Log in to get the token
       const token = await loginService(username, password);
 
-      // Save token to AuthContext
       login(token);
 
-      // Step 2: Fetch user info using the token and username
       const response = await axios.get(
         `https://localhost:7060/api/Person/search/username?userName=${username}`
       );
 
-      // Step 3: Save user info in PersonContext
       setUserInfo(response.data);
-      //console.log(response.data) ;
 
       toast.success("Login Successful!");
       navigate("/");
@@ -93,9 +88,9 @@ const Login = () => {
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? (
-                    <i className="fa fa-eye-slash"></i> // Eye-slash icon when visible
+                    <i className="fa fa-eye-slash"></i> 
                   ) : (
-                    <i className="fa fa-eye"></i> // Eye icon when hidden
+                    <i className="fa fa-eye"></i> 
                   )}
                 </button>
               </div>

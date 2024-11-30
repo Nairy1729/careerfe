@@ -18,12 +18,12 @@ const ProfileMenu = () => {
 
   console.log("by user info:", userInfo);
   if (userInfo) {
-    console.log(userInfo.fullname); // Now safe to access fullname
+    console.log(userInfo.fullname); 
   }
 
   const handleLogout = () => {
-    logout(); // Calls logout function from AuthContext
-    navigate("/login"); // Redirects user to login page after logout
+    logout(); 
+    navigate("/login");
   };
 
   return (
