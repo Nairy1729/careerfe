@@ -1,25 +1,37 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../AuthContext";
 import { login as loginService } from "../Services/AuthService";
-import { usePersonContext } from "../Services/PersonContext"; // Import PersonContext
+import { usePersonContext } from "../Services/PersonContext";
 import { toast } from "react-toastify";
-import axios from "axios"; // For API call
+import axios from "axios";
 import "./Login.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
-  const { setUserInfo } = usePersonContext(); // Destructure setUserInfo
+  const { setUserInfo } = usePersonContext();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is already logged in
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const role = localStorage.getItem("role");
+    if (isLoggedIn === "true") {
+      if (role === "Admin") {
+        navigate("/adminDash");
+      } else if (role === "User") {
+        navigate("/userDash");
+      }
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = await loginService(username, password);
-
       login(token);
 
       const response = await axios.get(
@@ -27,9 +39,20 @@ const Login = () => {
       );
 
       setUserInfo(response.data);
+      const role = response.data.role;
+
+      // Store login details in localStorage
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("role", role);
 
       toast.success("Login Successful!");
-      navigate("/");
+
+      // Navigate based on role
+      if (role === "Admin") {
+        navigate("/adminDash");
+      } else if (role === "User") {
+        navigate("/userDash");
+      }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         toast.error("Invalid credentials");
@@ -88,9 +111,9 @@ const Login = () => {
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? (
-                    <i className="fa fa-eye-slash"></i> 
+                    <i className="fa fa-eye-slash"></i>
                   ) : (
-                    <i className="fa fa-eye"></i> 
+                    <i className="fa fa-eye"></i>
                   )}
                 </button>
               </div>

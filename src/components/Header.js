@@ -1,17 +1,13 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthContext from "../AuthContext";
 import ProfileMenu from "./ProfileMenu"; // Import your ProfileMenu component
 import './Header.css'; // Import the new Header.css
 
 const Header = () => {
-  const { auth, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { auth } = useContext(AuthContext);
 
-  const handleLogout = () => {
-    logout(); // Calls logout function from AuthContext
-    navigate("/login"); // Redirects user to login page after logout
-  };
+
 
   return (
     <header>
@@ -39,7 +35,7 @@ const Header = () => {
                 <Link to="/company">Company</Link>
               </li>
               <div>
-                <ProfileMenu /> {/* Render the ProfileMenu component here */}
+                <ProfileMenu /> 
               </div>
             </>
           )}

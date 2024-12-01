@@ -1,30 +1,32 @@
 import React, { useState, useContext } from "react";
 import "./ProfileMenu.css";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../AuthContext";
 import { usePersonContext } from "../Services/PersonContext";
+import AuthContext from "../AuthContext";
 
 const ProfileMenu = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
+  const { userInfo, setUserInfo } = usePersonContext();
+  const { logout } = useContext(AuthContext); // Access logout from AuthContext
+  const navigate = useNavigate();
 
   const menuToggle = () => {
     setIsMenuActive((prev) => !prev);
   };
 
-  const { auth, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const { userInfo } = usePersonContext();
-
-  console.log("by user info:", userInfo);
-  if (userInfo) {
-    console.log(userInfo.fullname); 
-  }
-
   const handleLogout = () => {
-    logout(); 
+    // Clear user-related data from localStorage
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("role");
+  
+    // Clear context state
+    setUserInfo(null);
+    logout(); // Call the logout function to clear auth state
+  
+    // Redirect to the login page
     navigate("/login");
   };
+  
 
   return (
     <div className="action">

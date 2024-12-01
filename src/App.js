@@ -9,9 +9,14 @@ import { AuthProvider } from "./AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 import CompanyList from "./components/CompanyList";
-import Home from "./components/Home ";
+import Home from "./components/Home";
 import ProfileMenu from "./components/ProfileMenu";
+import UserDash from "./components/UserDash";
+import AdminDash from "./components/AdminDash"; // Import AdminDash component
+import RegisterCompany from "./components/RegisterCompany";
+import EditCompany from "./components/EditCompany";
 
 function App() {
   return (
@@ -23,12 +28,15 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route element={<PrivateRoute />}>
-          <Route path="/company" element={<CompanyList />} />
-          </Route>
+
+            <Route path="/company" element={<CompanyList />} />
+            <Route path="/userDash" element={<UserDash />} />
+            <Route path="/adminDash" element={<AdminDash />} />
+            <Route path="/register-company" element={<RegisterCompany />} />
+            <Route path="/edit-company/:companyId" element={<EditCompany/>} />
+    
         </Routes>
         <Footer />
-        {/* <ToastContainer /> */}
       </AuthProvider>
     </Router>
   );
