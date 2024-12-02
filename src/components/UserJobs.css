@@ -1,0 +1,100 @@
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Container for the jobs section */
+  .user-jobs {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-jobs h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333333;
+    margin-bottom: 20px;
+  }
+  
+  /* Job card styling */
+  .jobs-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .job-card {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .job-card h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin: 0 0 10px;
+  }
+  
+  .job-card p {
+    font-size: 1rem;
+    color: #555555;
+    margin: 5px 0;
+  }
+  
+  .job-card p span {
+    font-weight: bold;
+    color: #333333;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .jobs-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+  /* Button styles */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .apply-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .apply-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .withdraw-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .withdraw-btn:hover {
+    background-color: #a71d2a;
+  }
+  
+  
