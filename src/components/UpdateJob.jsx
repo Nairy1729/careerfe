@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import './UpdateJob.css';
+
 
 const UpdateJob = ({ job, onUpdate, onClose }) => {
   const [title, setTitle] = useState(job.title);

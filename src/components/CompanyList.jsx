@@ -1,45 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { getCompany, getJob, updateJob } from "../Services/CompanyService"; // Assuming you have an updateJob API service
+import { getCompany } from "../Services/CompanyService"; 
 import axios from "axios";
 import "./CompanyList.css";
 import { toast } from "react-toastify";
 import AdminJobs from "./AdminJobs";
-import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate and useParams for navigation and job ID
+import { useNavigate } from "react-router-dom"; 
+import Modal from "react-modal"; // Import react-modal
 
 const handleEdit = (companyId, navigate) => {
   navigate(`/edit-company/${companyId}`);
 };
 
-const handleEditJob = (jobId, navigate) => {
-  navigate(`/edit-job/${jobId}`); // Navigate to the job edit page with the job ID
-};
-
 const CompanyList = () => {
-  const [latestCompany, setLatestCompany] = useState(null); // State for the latest company
-  const [loading, setLoading] = useState(true); // Loading state
-  const [showJobForm, setShowJobForm] = useState(false); // State to toggle job form visibility
+  const [latestCompany, setLatestCompany] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+  const [showJobForm, setShowJobForm] = useState(false); 
   const [jobDetails, setJobDetails] = useState({
     title: "",
     description: "",
     salary: "",
     requirements: "",
-  }); // State for job details
-  const [error, setError] = useState(null); // Error state
-  const navigate = useNavigate(); // Use useNavigate hook for navigation
-
-  const { jobId } = useParams(); // Get the jobId from URL params (used in Edit job page)
+  });
+  const [error, setError] = useState(null); 
+  const navigate = useNavigate();
 
   // Fetch company data when the component mounts
   useEffect(() => {
     const fetchCompany = async () => {
       try {
         const data = await getCompany();
-        console.log(data); // Log the response to inspect it
         if (Array.isArray(data)) {
           const sortedCompanies = data.sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
           );
-          setLatestCompany(sortedCompanies[0]); // Set the latest company
+          setLatestCompany(sortedCompanies[0]);
         } else if (data.companies && Array.isArray(data.companies)) {
           const sortedCompanies = data.companies.sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -51,28 +45,12 @@ const CompanyList = () => {
       } catch (error) {
         console.error("Failed to fetch companies:", error);
       } finally {
-        setLoading(false); // Stop loading after data is fetched
+        setLoading(false);
       }
     };
 
     fetchCompany();
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
-
-  // Fetch job details for editing
-  useEffect(() => {
-    const fetchJobDetails = async () => {
-      if (jobId) {
-        try {
-          const response = await axios.get(`https://localhost:7060/api/JobPost/${jobId}`);
-          setJobDetails(response.data);
-        } catch (error) {
-          console.error("Failed to fetch job details:", error);
-        }
-      }
-    };
-
-    fetchJobDetails();
-  }, [jobId]); // Re-run this effect if jobId changes
+  }, []);
 
   const handleJobChange = (e) => {
     setJobDetails({ ...jobDetails, [e.target.name]: e.target.value });
@@ -80,11 +58,11 @@ const CompanyList = () => {
 
   const tokenExpired = (token) => {
     try {
-      const payload = JSON.parse(atob(token.split(".")[1])); // Decode token payload
-      return Date.now() >= payload.exp * 1000; // Check expiry
+      const payload = JSON.parse(atob(token.split(".")[1])); 
+      return Date.now() >= payload.exp * 1000; 
     } catch (error) {
       console.error("Invalid token format:", error);
-      return true; // Assume expired if token format is invalid
+      return true;
     }
   };
 
@@ -93,83 +71,41 @@ const CompanyList = () => {
 
     try {
       const token = localStorage.getItem("token");
-      console.log("Token:", token); // Debug token
 
       if (!token || tokenExpired(token)) {
         toast.error("Session expired. Please log in again.");
-        window.location.href = "/login"; // Redirect to login
+        window.location.href = "/login"; 
         return;
       }
 
       const jobPayload = {
-        id: 0, // Assuming the backend generates the ID
+        id: 0, 
         title: jobDetails.title,
         description: jobDetails.description,
         salary: parseFloat(jobDetails.salary),
         createdAt: new Date().toISOString(),
-        companyId: latestCompany.id, // Use the latest company's ID
-        createdById: "some-user-id", // Replace with the authenticated user's ID
-        requirements: jobDetails.requirements.split(","), // Split into an array
-        requirementsString: jobDetails.requirements, // For API compatibility
-      };
-
-      await axios.post("https://localhost:7060/api/JobPost/postJob", jobPayload, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Use the token from localStorage
-        },
-      });
-
-      toast.success("Job posted successfully!");
-      setShowJobForm(false); // Hide the form after successful submission
-    } catch (err) {
-      console.error("Job posting failed:", err.response?.data || err.message);
-      if (err.response?.status === 401) {
-        toast.error("Authentication failed. Please log in again.");
-        window.location.href = "/login"; // Redirect to login
-      } else {
-        setError(err.response?.data?.message || "Failed to post the job.");
-      }
-    }
-  };
-
-  const handleUpdateJob = async (e) => {
-    e.preventDefault();
-
-    try {
-      const token = localStorage.getItem("token");
-      console.log("Token:", token);
-
-      if (!token || tokenExpired(token)) {
-        toast.error("Session expired. Please log in again.");
-        window.location.href = "/login"; // Redirect to login
-        return;
-      }
-
-      const jobPayload = {
-        title: jobDetails.title,
-        description: jobDetails.description,
-        salary: parseFloat(jobDetails.salary),
+        companyId: latestCompany.id,
+        createdById: "some-user-id",
         requirements: jobDetails.requirements.split(","),
         requirementsString: jobDetails.requirements,
       };
 
-      await axios.put(`https://localhost:7060/api/JobPost/updateJob/${jobId}`, jobPayload, {
+      await axios.post("https://localhost:7060/api/JobPost/postJob", jobPayload, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
 
-      toast.success("Job updated successfully!");
-      navigate("/admin-dashboard"); // Redirect after successful job update
+      toast.success("Job posted successfully!");
+      setShowJobForm(false); 
     } catch (err) {
-      console.error("Job update failed:", err.response?.data || err.message);
+      console.error("Job posting failed:", err.response?.data || err.message);
       if (err.response?.status === 401) {
         toast.error("Authentication failed. Please log in again.");
-        window.location.href = "/login"; // Redirect to login
+        window.location.href = "/login"; 
       } else {
-        setError(err.response?.data?.message || "Failed to update the job.");
+        setError(err.response?.data?.message || "Failed to post the job.");
       }
     }
   };
@@ -202,15 +138,23 @@ const CompanyList = () => {
           </a>
         </p>
         <p>Location: {latestCompany.location}</p>
-        <button onClick={() => handleEdit(latestCompany.id, navigate)}>Edit Company</button>
-        <button onClick={() => setShowJobForm(!showJobForm)}>
-          {showJobForm ? "Cancel Job Posting" : "Post Job"}
+        <button onClick={() => handleEdit(latestCompany.id, navigate)}>
+          Edit Company
         </button>
+        <button onClick={() => setShowJobForm(true)}>Post Job</button>
       </div>
       <div><AdminJobs /></div>
 
-      {showJobForm && (
-        <form onSubmit={jobId ? handleUpdateJob : handlePostJob} className="job-form">
+      {/* Modal for Job Posting */}
+      <Modal
+        isOpen={showJobForm}
+        onRequestClose={() => setShowJobForm(false)}
+        contentLabel="Post Job"
+        ariaHideApp={false} // To prevent issues with React Modal in some environments
+        className="modal" // You can style the modal with your own CSS
+        overlayClassName="modal-overlay" // Style the overlay if needed
+      >
+        <form onSubmit={handlePostJob} className="job-form">
           <div>
             <label>Job Title:</label>
             <input
@@ -250,9 +194,12 @@ const CompanyList = () => {
               required
             />
           </div>
-          <button type="submit">{jobId ? "Update Job" : "Post Job"}</button>
+          <button type="submit">Post Job</button>
+          <button type="button" onClick={() => setShowJobForm(false)}>
+            Cancel
+          </button>
         </form>
-      )}
+      </Modal>
     </div>
   );
 };

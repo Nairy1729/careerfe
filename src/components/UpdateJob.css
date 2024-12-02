@@ -1,43 +1,98 @@
-.update-job-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .update-job-container {
-    background: #fff;
+/* Container styling for the update job form */
+.update-job {
+  background-color: #f9f9f9;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 600px;
+  font-family: Arial, sans-serif;
+}
+
+/* Title styling */
+.update-job h2 {
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+/* Styling for the form elements */
+.update-job .form-group {
+  margin-bottom: 15px;
+}
+
+.update-job label {
+  display: block;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.update-job input,
+.update-job textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.update-job input:focus,
+.update-job textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Textarea specific styling */
+.update-job textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Styling for buttons */
+.update-job .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-right: 10px;
+}
+
+.update-job .btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.update-job .btn-primary:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.update-job .btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.update-job .btn-secondary:hover {
+  background-color: #495057;
+  transform: translateY(-2px);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .update-job {
     padding: 20px;
-    border-radius: 5px;
-    max-width: 500px;
+  }
+
+  .update-job .btn {
     width: 100%;
+    margin-bottom: 10px;
   }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-  
+}

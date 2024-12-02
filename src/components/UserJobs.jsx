@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import './UserJobs.css';
+import "./UserJobs.css";
+import SearchJobs from "./SearchJobs";
 
 const UserJobs = () => {
   const [jobs, setJobs] = useState([]); // Jobs list
+  const [allJobs, setAllJobs] = useState([]); // All jobs list (for search)
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
 
@@ -30,6 +32,7 @@ const UserJobs = () => {
 
         if (Array.isArray(response.data.jobs)) {
           setJobs(response.data.jobs); // Update jobs state
+          setAllJobs(response.data.jobs); // Store all jobs for searching
         } else {
           setError("Unexpected API response format.");
         }
@@ -41,7 +44,7 @@ const UserJobs = () => {
     };
 
     fetchUserJobs();
-  }, []);
+  }, []); // Initial jobs fetch
 
   // Handle Apply for job
   const handleApply = async (jobId) => {
@@ -70,30 +73,34 @@ const UserJobs = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="user-jobs">
-      <h2>Jobs For You</h2>
-      <div className="jobs-list">
-        {jobs.length > 0 ? (
-          jobs.map((job) => (
-            <div key={job.id} className="job-card">
-              <h3>{job.title}</h3>
-              <p>{job.description}</p>
-              <p>Salary: ₹{job.salary}</p>
-              <p>Posted on: {new Date(job.createdAt).toLocaleDateString()}</p>
-              <p>Requirements: {job.requirementsString}</p>
-              <button
-                className="btn apply-btn"
-                onClick={() => handleApply(job.id)}
-              >
-                Apply
-              </button>
-            </div>
-          ))
-        ) : (
-          <p>No jobs available.</p>
-        )}
+    <>
+      {/* Pass setJobs and allJobs to SearchJobs */}
+      <SearchJobs setJobs={setJobs} allJobs={allJobs} />
+      <div className="user-jobs">
+        <h2>Jobs For You</h2>
+        <div className="jobs-list">
+          {jobs.length > 0 ? (
+            jobs.map((job) => (
+              <div key={job.id} className="job-card">
+                <h3>{job.title}</h3>
+                <p>{job.description}</p>
+                <p>Salary: ₹{job.salary}</p>
+                <p>Posted on: {new Date(job.createdAt).toLocaleDateString()}</p>
+                <p>Requirements: {job.requirementsString}</p>
+                <button
+                  className="btn apply-btn"
+                  onClick={() => handleApply(job.id)}
+                >
+                  Apply
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No jobs available.</p>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
