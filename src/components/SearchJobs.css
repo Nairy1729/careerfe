@@ -1,103 +1,92 @@
-/* SearchJobs styles */
+/* Container for the search bar */
 .search-jobs-container {
-    padding: 20px;
-    background-color: #f9f9f9;  /* Light background color */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 900px;
+    max-width: 600px;
     margin: 20px auto;
-  }
-  
-  .search-jobs-container h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
   }
   
-  .search-jobs-container form {
-    display: flex;
-    justify-content: center;
+  /* Heading styling */
+  .search-jobs-container h1 {
+    font-size: 24px;
     margin-bottom: 20px;
+    color: #333;
   }
   
+  /* Search input styling */
   .search-input {
-    padding: 8px 12px;
+    width: 80%;
+    padding: 10px 15px;
     font-size: 16px;
-    width: 60%;
-    margin-right: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    border: 1px solid #ccc;
     outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
   
+  /* Focus effect for the search input */
   .search-input:focus {
-    border-color: #4CAF50;
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
   
+  /* Search button styling */
   .search-button {
-    padding: 8px 16px;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-left: 10px;
     font-size: 16px;
-    background-color: #4CAF50;
+    font-weight: bold;
     color: white;
+    background-color: #007BFF;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
+  /* Hover and active effects for the button */
   .search-button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
+    transform: scale(1.05);
   }
   
+  .search-button:active {
+    background-color: #003f7f;
+  }
+  
+  /* Loading and error messages styling */
   .search-jobs-container p {
-    font-size: 16px;
-    color: #666;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
   }
   
-  .search-jobs-container ul {
-    list-style-type: none;
-    padding-left: 0;
+  /* Loading message */
+  .search-jobs-container p:only-child {
+    font-style: italic;
+    color: #007BFF;
   }
   
-  .search-jobs-container li {
-    background-color: #fff;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Error message */
+  .search-jobs-container p:last-child {
+    color: #FF0000;
   }
   
-  .search-jobs-container li strong {
-    color: #333;
-  }
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .search-input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
   
-  .search-jobs-container li hr {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 0;
-    border-top: 1px solid #ddd;
-  }
-  
-  .search-jobs-container .loading,
-  .search-jobs-container .error {
-    text-align: center;
-    font-size: 18px;
-    color: #ff0000;
-  }
-  
-  .search-jobs-container .loading {
-    color: #ffa500;  /* Orange color for loading */
-  }
-  
-  .search-jobs-container .error {
-    color: #ff0000;  /* Red color for errors */
-  }
-  
-  /* Prevent interference with header or footer */
-  body .search-jobs-container {
-    margin-top: 80px;  /* Add top margin if you have a fixed header */
-    margin-bottom: 40px;  /* Add bottom margin if you have a fixed footer */
+    .search-button {
+      width: 100%;
+      margin-left: 0;
+    }
   }
   

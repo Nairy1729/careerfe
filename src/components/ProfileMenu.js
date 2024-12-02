@@ -37,7 +37,10 @@ const ProfileMenu = () => {
         <h3>
           {userInfo ? userInfo.fullname : "Someone"}
           <br />
-          <span>{userInfo ? userInfo.role : "Website Designer"}</span>
+          <span>
+  {userInfo ? (userInfo.role === "Admin" ? "Employer" : "JobSeeker") : "Website Designer"}
+</span>
+
         </h3>
         <ul>
           <li>

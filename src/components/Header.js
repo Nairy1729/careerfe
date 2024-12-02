@@ -20,6 +20,12 @@ const Header = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
+          <li>
+            <Link to="/aboutUs">AboutUs</Link>
+          </li>
+          <li>
+            <Link to="/contactUs">ContactUs</Link>
+          </li>
           {!auth ? (
             <>
               <li>

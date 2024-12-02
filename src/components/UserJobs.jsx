@@ -75,9 +75,11 @@ const UserJobs = () => {
   return (
     <>
       {/* Pass setJobs and allJobs to SearchJobs */}
-      <SearchJobs setJobs={setJobs} allJobs={allJobs} />
       <div className="user-jobs">
+
         <h2>Jobs For You</h2>
+      <div style={{marginBottom:"2rem"}}><SearchJobs setJobs={setJobs} allJobs={allJobs} /></div>
+
         <div className="jobs-list">
           {jobs.length > 0 ? (
             jobs.map((job) => (

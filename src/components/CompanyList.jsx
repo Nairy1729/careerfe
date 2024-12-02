@@ -6,10 +6,9 @@ import { toast } from "react-toastify";
 import AdminJobs from "./AdminJobs";
 import { useNavigate } from "react-router-dom"; 
 import Modal from "react-modal"; // Import react-modal
+import EditCompany  from "./EditCompany";
 
-const handleEdit = (companyId, navigate) => {
-  navigate(`/edit-company/${companyId}`);
-};
+
 
 const CompanyList = () => {
   const [latestCompany, setLatestCompany] = useState(null); 
@@ -21,6 +20,14 @@ const CompanyList = () => {
     salary: "",
     requirements: "",
   });
+
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedCompanyId, setSelectedCompanyId] = useState(null);
+
+  const handleEdit = (companyId) => {
+    setSelectedCompanyId(companyId); // Set the selected company ID
+    setShowEditModal(true); // Open the edit modal
+  };
   const [error, setError] = useState(null); 
   const navigate = useNavigate();
 
@@ -138,9 +145,10 @@ const CompanyList = () => {
           </a>
         </p>
         <p>Location: {latestCompany.location}</p>
-        <button onClick={() => handleEdit(latestCompany.id, navigate)}>
+        <button onClick={() => handleEdit(latestCompany.id)}>
           Edit Company
         </button>
+
         <button onClick={() => setShowJobForm(true)}>Post Job</button>
       </div>
       <div><AdminJobs /></div>
@@ -199,6 +207,19 @@ const CompanyList = () => {
             Cancel
           </button>
         </form>
+      </Modal>
+      <Modal
+        isOpen={showEditModal}
+        onRequestClose={() => setShowEditModal(false)}
+        contentLabel="Edit Company"
+        ariaHideApp={false}
+        className="modal"
+        overlayClassName="modal-overlay"
+      >
+        <EditCompany
+          companyId={selectedCompanyId}
+          onClose={() => setShowEditModal(false)} // Close modal handler
+        />
       </Modal>
     </div>
   );

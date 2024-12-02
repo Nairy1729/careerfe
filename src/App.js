@@ -16,6 +16,8 @@ import ProfileMenu from "./components/ProfileMenu";
 import UserDash from "./components/UserDash";
 import AdminDash from "./components/AdminDash"; // Import AdminDash component
 import RegisterCompany from "./components/RegisterCompany";
+import ContactUs from "./components/ContactUs";
+import AboutUs from "./components/AboutUs";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
       <AuthProvider>
         <Header />
         <Routes>
+          <Route path="/contactUs" element={<ContactUs/>}/>
+          <Route path="/aboutUs" element={<AboutUs/>}/>          
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

@@ -1,3 +1,88 @@
-h1{
+/* General container styling */
+.user-dash {
+  padding: 20px;
+  margin: 20px auto;
+  /* max-width: 800px; */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-top: 10rem;
+}
+
+/* Title styling */
+.user-dash__title {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Button container */
+.user-dash__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Individual button styling */
+.user-dash__button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Specific button styles */
+.user-dash__button--jobs {
+  background-color: #4CAF50; /* Green for jobs */
+  color: white;
+}
+
+.user-dash__button--jobs:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.user-dash__button--applied {
+  background-color: #008CBA; /* Blue for applied jobs */
+  color: white;
+}
+
+.user-dash__button--applied:hover {
+  background-color: #007B9E;
+  transform: scale(1.05);
+}
+
+/* Content area styling */
+.user-dash__content {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .user-dash__buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .user-dash__button {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .user-dash {
+    padding: 15px;
+  }
+
+  .user-dash__title {
+    font-size: 24px;
+  }
 }

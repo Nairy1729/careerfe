@@ -1,39 +1,38 @@
 import React, { useState } from "react";
 import UserJobs from "./UserJobs";
-import AppliedJobs from "./AppliedJobs"; // Assuming you have this component already
+import AppliedJobs from "./AppliedJobs";
 import './UserDash.css';
 
 const UserDash = () => {
-  // States to toggle the visibility of UserJobs and AppliedJobs components
   const [showUserJobs, setShowUserJobs] = useState(false);
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
 
-  // Function to show UserJobs
   const handleUserJobsClick = () => {
     setShowUserJobs(true);
-    setShowAppliedJobs(false);  // Hide Applied Jobs when User Jobs is clicked
+    setShowAppliedJobs(false);
   };
 
-  // Function to show AppliedJobs
   const handleAppliedJobsClick = () => {
     setShowAppliedJobs(true);
-    setShowUserJobs(false);  // Hide User Jobs when Applied Jobs is clicked
+    setShowUserJobs(false);
   };
 
   return (
-    <>
-      <h1>Welcome to User Dashboard</h1>
-      
-      {/* Buttons to show each component */}
-      <button onClick={handleUserJobsClick}>Show User Jobs</button>
-      <button onClick={handleAppliedJobsClick}>Show Applied Jobs</button>
-      
-      <div>
-        {/* Conditionally render the UserJobs or AppliedJobs component based on state */}
+    <div className="user-dash">
+      <h1 className="user-dash__title">Welcome to User Dashboard</h1>
+      <div className="user-dash__buttons">
+        <button className="user-dash__button user-dash__button--jobs" onClick={handleUserJobsClick}>
+          Show User Jobs
+        </button>
+        <button className="user-dash__button user-dash__button--applied" onClick={handleAppliedJobsClick}>
+          Show Applied Jobs
+        </button>
+      </div>
+      <div className="user-dash__content">
         {showUserJobs && <UserJobs />}
         {showAppliedJobs && <AppliedJobs />}
       </div>
-    </>
+    </div>
   );
 };
 

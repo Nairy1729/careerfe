@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./SearchJobs.css";
 
 const SearchJobs = ({ setJobs, allJobs }) => {
   const [searchQuery, setSearchQuery] = useState(""); // Search query state
