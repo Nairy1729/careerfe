@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./JobApplicants.css";
 
+// Postmark API Key
+const POSTMARK_API_KEY = "08cac149-9c77-4db9-9b28-0a64a2317e9e";
+
 const JobApplicants = ({ jobId }) => {
   const [applicants, setApplicants] = useState([]); // Store applicants list
   const [loading, setLoading] = useState(true); // Loading state
@@ -80,10 +83,34 @@ const JobApplicants = ({ jobId }) => {
     }
   };
 
+  // Function to send email via Postmark
+  const sendEmail = async (recipientEmail, applicantName, status) => {
+    try {
+      const response = await axios.post(
+        "https://api.postmarkapp.com/email",
+        {
+          From: "narendra.2020@vitstudent.ac.in",
+          To: "narendra.2020@vitstudent.ac.in",
+          Subject: `Your Application Status: ${status}`,
+          TextBody: `Dear ${applicantName},\n\nYour application status has been updated to ${status}.\n\nBest regards,\nCompany Name`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${POSTMARK_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Email sent successfully:", response.data);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send email notification.");
+    }
+  };
 
-  const handleStatusUpdate = async (applicantId, jobId, status) => {
+  const handleStatusUpdate = async (applicantId, jobId, status, applicantEmail, applicantName) => {
     const token = localStorage.getItem("token");
-  
+
     try {
       const response = await axios.patch(
         `https://localhost:7060/api/Jobs/update-status?applicantId=${applicantId}&jobId=${jobId}`,
@@ -95,7 +122,7 @@ const JobApplicants = ({ jobId }) => {
           },
         }
       );
-  
+
       if (response.data.success) {
         toast.success("Status updated successfully!");
         // Optionally, re-fetch applicants to reflect the updated status
@@ -106,6 +133,8 @@ const JobApplicants = ({ jobId }) => {
               : applicant
           )
         );
+        // Send email to the applicant about the status update
+        await sendEmail(applicantEmail, applicantName, status);
       } else {
         toast.error(response.data.message || "Failed to update status.");
       }
@@ -114,10 +143,6 @@ const JobApplicants = ({ jobId }) => {
       toast.error(error.response?.data?.message || "Failed to update status. Please try again.");
     }
   };
-  
-
-
-  
 
   return (
     <div className="job-applicants">
@@ -126,30 +151,29 @@ const JobApplicants = ({ jobId }) => {
         {applicants.length > 0 ? (
           applicants.map((applicant) => (
             <div key={applicant.applicationId} className="applicant-card">
-            <h3>{applicant.applicantName}</h3>
-            <p>Email: {applicant.email}</p>
-            <p>Phone: {applicant.phoneNumber}</p>
-            <p>Bio: {applicant.bio}</p>
-            <p>Skills: {applicant.skills}</p>
-            <p>Status: {applicant.status === 0 ? "Pending" : applicant.status === 1 ? "Accepted" : "Rejected"}</p>
-            <p>Applied on: {new Date(applicant.createdAt).toLocaleDateString()}</p>
-            <button
+              <h3>{applicant.applicantName}</h3>
+              <p>Email: {applicant.email}</p>
+              <p>Phone: {applicant.phoneNumber}</p>
+              <p>Bio: {applicant.bio}</p>
+              <p>Skills: {applicant.skills}</p>
+              <p>Status: {applicant.status === 0 ? "Pending" : applicant.status === 1 ? "Accepted" : "Rejected"}</p>
+              <p>Applied on: {new Date(applicant.createdAt).toLocaleDateString()}</p>
+              <button
                 className="modal-button download-button"
                 onClick={() => handleResumeDownload(applicant.applicantId)}
-            >
+              >
                 Download Resume
-            </button>
-            <select
+              </button>
+              <select
                 className="status-dropdown"
-                onChange={(e) => handleStatusUpdate(applicant.applicantId, jobId, e.target.value)}
+                onChange={(e) => handleStatusUpdate(applicant.applicantId, jobId, e.target.value, applicant.email, applicant.applicantName)}
                 defaultValue={applicant.status}
-            >
+              >
                 <option value="Pending">Pending</option>
                 <option value="Accepted">Accepted</option>
                 <option value="Rejected">Rejected</option>
-            </select>
+              </select>
             </div>
-
           ))
         ) : (
           <p>No applicants found for this job.</p>

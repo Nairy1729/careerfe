@@ -102,8 +102,10 @@ const AppliedJobs = () => {
         <ul>
           {jobs.map((job) => (
             <li key={job.id}>
-              <strong>Job ID:</strong> {job.jobId} <br />
-              <strong>Applicant ID:</strong> {job.applicantId} <br />
+              {/* <strong>Job ID:</strong> {job.jobId} <br /> */}
+              <strong>Job Title:</strong> {job.jobTitle} <br />
+              <strong>Job Description:</strong>{job.jobDescription} <br />
+              <string>Salary:</string>{job.jobSalary} <br />
               <strong>Status:</strong> {job.status === 0 ? 'Pending' : 'Accepted'} <br />
               <strong>Applied On:</strong> {new Date(job.createdAt).toLocaleString()} <br />
               <button onClick={() => handleWithdraw(job.jobId)}>Withdraw</button>
