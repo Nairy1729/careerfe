@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./JobApplicants.css";
 
 // Postmark API Key
-const POSTMARK_API_KEY = "08cac149-9c77-4db9-9b28-0a64a2317e9e";
+// const POSTMARK_API_KEY = "08cac149-9c77-4db9-9b28-0a64a2317e9e";
 
 const JobApplicants = ({ jobId }) => {
   const [applicants, setApplicants] = useState([]); // Store applicants list
@@ -84,29 +84,29 @@ const JobApplicants = ({ jobId }) => {
   };
 
   // Function to send email via Postmark
-  const sendEmail = async (recipientEmail, applicantName, status) => {
-    try {
-      const response = await axios.post(
-        "https://api.postmarkapp.com/email",
-        {
-          From: "narendra.2020@vitstudent.ac.in",
-          To: "narendra.2020@vitstudent.ac.in",
-          Subject: `Your Application Status: ${status}`,
-          TextBody: `Dear ${applicantName},\n\nYour application status has been updated to ${status}.\n\nBest regards,\nCompany Name`,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${POSTMARK_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Email sent successfully:", response.data);
-    } catch (error) {
-      console.error("Error sending email:", error);
-      toast.error("Failed to send email notification.");
-    }
-  };
+//   const sendEmail = async (recipientEmail, applicantName, status) => {
+//     try {
+//       const response = await axios.post(
+//         "https://api.postmarkapp.com/email",
+//         {
+//           From: "narendra.2020@vitstudent.ac.in",
+//           To: "narendra.2020@vitstudent.ac.in",
+//           Subject: `Your Application Status: ${status}`,
+//           TextBody: `Dear ${applicantName},\n\nYour application status has been updated to ${status}.\n\nBest regards,\nCompany Name`,
+//         },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${POSTMARK_API_KEY}`,
+//             "Content-Type": "application/json",
+//           },
+//         }
+//       );
+//       console.log("Email sent successfully:", response.data);
+//     } catch (error) {
+//       console.error("Error sending email:", error);
+//       toast.error("Failed to send email notification.");
+//     }
+//   };
 
   const handleStatusUpdate = async (applicantId, jobId, status, applicantEmail, applicantName) => {
     const token = localStorage.getItem("token");
@@ -124,7 +124,7 @@ const JobApplicants = ({ jobId }) => {
       );
 
       if (response.data.success) {
-        toast.success("Status updated successfully!");
+        toast.success("Status updated successfully , and mailed to applicant!");
         // Optionally, re-fetch applicants to reflect the updated status
         setApplicants((prevApplicants) =>
           prevApplicants.map((applicant) =>
@@ -134,7 +134,7 @@ const JobApplicants = ({ jobId }) => {
           )
         );
         // Send email to the applicant about the status update
-        await sendEmail(applicantEmail, applicantName, status);
+        // await sendEmail(applicantEmail, applicantName, status);
       } else {
         toast.error(response.data.message || "Failed to update status.");
       }
