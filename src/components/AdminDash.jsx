@@ -3,33 +3,24 @@ import RegisterCompany from "./RegisterCompany";
 import "./AdminDash.css";
 
 const AdminDash = () => {
-  const [showRegisterCompany, setShowRegisterCompany] = useState(false); // State to toggle the registration form
+  const [showModal, setShowModal] = useState(false); // State to toggle the modal
 
-  const handleRegisterCompany = () => {
-    setShowRegisterCompany(true); // Show the RegisterCompany component
+  const handleOpenModal = () => {
+    setShowModal(true); // Show the modal
   };
 
-  const handleGoBack = () => {
-    setShowRegisterCompany(false); // Hide the RegisterCompany component and return to dashboard
+  const handleCloseModal = () => {
+    setShowModal(false); // Hide the modal
   };
 
   return (
     <div className="admin-dash">
-      {!showRegisterCompany ? (
-        <>
-          <h1>Welcome to Admin Dashboard</h1>
-          <button onClick={handleRegisterCompany} className="btn btn-primary">
-            Register Company
-          </button>
-        </>
-      ) : (
-        <div className="register-company-container">
-          <button onClick={handleGoBack} className="btn btn-secondary">
-            Back to Dashboard
-          </button>
-          <RegisterCompany />
-        </div>
-      )}
+      {/* <h1>Welcome to Admin Dashboard</h1> */}
+      <button onClick={handleOpenModal} className="btn btn-primary">
+        Register Company
+      </button>
+
+      <RegisterCompany isOpen={showModal} onClose={handleCloseModal} />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import AdminJobs from "./AdminJobs";
 import { useNavigate } from "react-router-dom"; 
 import Modal from "react-modal"; // Import react-modal
 import EditCompany  from "./EditCompany";
+import AdminDash from "./AdminDash";
 
 
 
@@ -151,6 +152,7 @@ const CompanyList = () => {
 
         <button onClick={() => setShowJobForm(true)}>Post Job</button>
       </div>
+      <div><AdminDash/></div>
       <div><AdminJobs /></div>
 
       {/* Modal for Job Posting */}

@@ -21,7 +21,7 @@ const Login = () => {
     const role = localStorage.getItem("role");
     if (isLoggedIn === "true") {
       if (role === "Admin") {
-        navigate("/adminDash");
+        navigate("/company");
       } else if (role === "User") {
         navigate("/userDash");
       }
@@ -49,7 +49,7 @@ const Login = () => {
 
       // Navigate based on role
       if (role === "Admin") {
-        navigate("/adminDash");
+        navigate("/company");
       } else if (role === "User") {
         navigate("/userDash");
       }

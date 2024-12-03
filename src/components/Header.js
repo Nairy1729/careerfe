@@ -6,6 +6,7 @@ import './Header.css'; // Import the new Header.css
 
 const Header = () => {
   const { auth } = useContext(AuthContext);
+  const role = localStorage.getItem("role");
 
 
 
@@ -37,9 +38,15 @@ const Header = () => {
             </>
           ) : (
             <>
-              <li>
-                <Link to="/company">Company</Link>
-              </li>
+                {role === 'Admin' ? (
+                  <li>
+                    <Link to="/company">Employer Section</Link>
+                  </li>
+                ) : (
+                  <li>
+                    <Link to="/userDash">JobSeeker Section</Link>
+                  </li>
+                )}
               <div>
                 <ProfileMenu /> 
               </div>
