@@ -59,4 +59,35 @@
     color: #999;
     font-size: 16px;
   }
+
+  .status-dropdown {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .status-dropdown:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle glow effect */
+    outline: none;
+  }
+  
+  .status-dropdown:hover {
+    background-color: #f1f1f1; /* Slight hover effect */
+    cursor: pointer;
+  }
+  
+  .status-dropdown option {
+    background-color: #fff; /* White background for options */
+    color: #333; /* Standard text color */
+    padding: 5px;
+  }
+  
   
