@@ -6,30 +6,34 @@ import { usePersonContext } from "../Services/PersonContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./Login.css";
+import ForgotPassword from "./ForgotPassword"; // Reusable modal component
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isForgotPasswordOpen, setForgotPasswordOpen] = useState(false);
+
   const { login } = useContext(AuthContext);
   const { setUserInfo } = usePersonContext();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
+  // Redirect if already logged in
   useEffect(() => {
-    // Check if the user is already logged in
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const role = localStorage.getItem("role");
     if (isLoggedIn === "true") {
-      if (role === "Admin") {
-        navigate("/company");
-      } else if (role === "User") {
-        navigate("/userDash");
-      }
+      navigate(role === "Admin" ? "/company" : "/userDash");
     }
   }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!username || !password) {
+      toast.error("Please enter both username and password.");
+      return;
+    }
+
     try {
       const token = await loginService(username, password);
       login(token);
@@ -38,28 +42,27 @@ const Login = () => {
         `https://localhost:7060/api/Person/search/username?userName=${username}`
       );
 
-      setUserInfo(response.data);
-      const role = response.data.role;
+      const userInfo = response.data;
+      setUserInfo(userInfo);
 
-      // Store login details in localStorage
+      const { role } = userInfo;
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("role", role);
 
       toast.success("Login Successful!");
-
-      // Navigate based on role
-      if (role === "Admin") {
-        navigate("/company");
-      } else if (role === "User") {
-        navigate("/userDash");
-      }
+      navigate(role === "Admin" ? "/company" : "/userDash");
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        toast.error("Invalid credentials");
-      } else if (error.response && error.response.status === 404) {
-        toast.error("User not found");
+      if (error.response) {
+        const { status } = error.response;
+        if (status === 401) {
+          toast.error("Invalid credentials. Please try again.");
+        } else if (status === 404) {
+          toast.error("User not found. Please register.");
+        } else {
+          toast.error("An unexpected error occurred. Please try again later.");
+        }
       } else {
-        toast.error("An unexpected error occurred");
+        toast.error("Failed to connect. Check your network connection.");
       }
     }
   };
@@ -73,10 +76,11 @@ const Login = () => {
           <span className="highlight">Grow with us</span>
         </h1>
         <p className="description">
-          Unlock opportunities and manage your business seamlessly. Experience the best tools
-          for your growth journey.
+          Unlock opportunities and manage your business seamlessly. Experience
+          the best tools for your growth journey.
         </p>
       </div>
+
       <div className="right-section">
         <div className="login-card">
           <h2 className="card-title">Login</h2>
@@ -92,7 +96,6 @@ const Login = () => {
                 placeholder="Enter your username"
               />
             </div>
-
             <div className="form-group">
               <label>Password</label>
               <div className="password-container">
@@ -118,10 +121,19 @@ const Login = () => {
                 </button>
               </div>
             </div>
-
             <button type="submit" className="btn btn-primary">
               Login
             </button>
+            <a
+              href="#"
+              className="forgot-password-button"
+              onClick={(e) => {
+                e.preventDefault(); // Prevents page reload
+                setForgotPasswordOpen(true);
+              }}
+            >
+              Forgot Password
+            </a>
 
             <p className="signup-text">
               Not registered?{" "}
@@ -135,6 +147,14 @@ const Login = () => {
           </form>
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      {isForgotPasswordOpen && (
+        <ForgotPassword
+          isModalOpen={isForgotPasswordOpen}
+          setIsModalOpen={setForgotPasswordOpen}
+        />
+      )}
     </div>
   );
 };
