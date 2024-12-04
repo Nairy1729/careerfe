@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
-
 const Register = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -16,6 +15,7 @@ const Register = () => {
     phoneNumber: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState("");
   const [usernameAvailable, setUsernameAvailable] = useState(null); // Null: Not checked, true: Available, false: Taken
 
   const navigate = useNavigate();
@@ -27,8 +27,30 @@ const Register = () => {
       [name]: value,
     });
 
+    if (name === "password") {
+      evaluatePasswordStrength(value);
+    }
+
     if (name === "username") {
       setUsernameAvailable(null);
+    }
+  };
+
+  const evaluatePasswordStrength = (password) => {
+    const hasLength = password.length >= 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (!password) {
+      setPasswordStrength("");
+    } else if (hasLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
+      setPasswordStrength("Strong");
+    } else if (hasLength && (hasUpperCase || hasLowerCase) && (hasNumber || hasSpecialChar)) {
+      setPasswordStrength("Medium");
+    } else {
+      setPasswordStrength("Weak");
     }
   };
 
@@ -37,12 +59,12 @@ const Register = () => {
       toast.error("Please enter a username to check availability.");
       return;
     }
-  
+
     try {
       await axios.get(
         `https://localhost:7060/api/Person/search/username?userName=${formData.username}`
       );
-      
+
       setUsernameAvailable(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -54,20 +76,14 @@ const Register = () => {
     }
   };
 
-
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate fields
     const { username, fullName, email, password, role, phoneNumber } = formData;
     if (!username || !fullName || !email || !password || !role || !phoneNumber) {
       toast.error("All fields are required. Please fill in all the details.");
       return;
     }
-
-
 
     try {
       await axios.post("https://localhost:7060/api/Authentication/register", formData);
@@ -81,43 +97,51 @@ const Register = () => {
 
   return (
     <div className="register-page">
-      <div className="left-section1">
-        <h2>Welcome to Registration</h2>
-        <p>Create your account to access all features.</p>
-      </div>
+<div className="left-section1">
+  <h2>Join Our Community</h2>
+  <p>
+    Become a part of a thriving network that prioritizes your goals and success.
+  </p>
+  <p>
+    Register today and take the first step towards endless possibilities. 
+    </p>
+    <p>
+    Your journey starts here.
+  </p>
+</div>
+
       <div className="right-section">
         <div className="register-card">
           <h3>Register</h3>
           <form onSubmit={handleSubmit}>
-          <div className="form-group">
-  <label>
-    Username <span className="required">*</span>
-  </label>
-  <div className="username-container">
-    <input
-      type="text"
-      name="username"
-      value={formData.username}
-      onChange={handleChange}
-      placeholder="Username"
-      className={`form-control ${
-        usernameAvailable === true
-          ? "username-available"
-          : usernameAvailable === false
-          ? "username-taken"
-          : ""
-      }`}
-    />
-    <button
-      type="button"
-      onClick={checkUsernameAvailability}
-      className="check-availability-btn"
-    >
-      Check
-    </button>
-  </div>
-</div>
-
+            <div className="form-group">
+              <label>
+                Username <span className="required">*</span>
+              </label>
+              <div className="username-container">
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  placeholder="Username"
+                  className={`form-control ${
+                    usernameAvailable === true
+                      ? "username-available"
+                      : usernameAvailable === false
+                      ? "username-taken"
+                      : ""
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={checkUsernameAvailability}
+                  className="check-availability-btn"
+                >
+                  Check
+                </button>
+              </div>
+            </div>
 
             <div className="form-group">
               <label>
@@ -132,6 +156,7 @@ const Register = () => {
                 className="form-control"
               />
             </div>
+
             <div className="form-group">
               <label>
                 Email <span className="required">*</span>
@@ -145,6 +170,7 @@ const Register = () => {
                 className="form-control"
               />
             </div>
+
             <div className="form-group">
               <label>
                 Password <span className="required">*</span>
@@ -171,7 +197,15 @@ const Register = () => {
                   )}
                 </button>
               </div>
+              <p className={`password-strength ${passwordStrength.toLowerCase()}`}>
+                Password Strength: {passwordStrength}
+              </p>
+              {/* <p className="password-requirements">
+                Password must be at least 8 characters long and include:
+                uppercase, lowercase, number, and special character.
+              </p> */}
             </div>
+
             <div className="form-group">
               <label>
                 Role <span className="required">*</span>
@@ -199,6 +233,7 @@ const Register = () => {
                 </label>
               </div>
             </div>
+
             <div className="form-group">
               <label>
                 Phone Number <span className="required">*</span>
@@ -212,6 +247,7 @@ const Register = () => {
                 className="form-control"
               />
             </div>
+
             <button type="submit" className="btn-primary">
               Register
             </button>

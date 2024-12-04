@@ -37,7 +37,7 @@ const ProfileMenu = () => {
         setProfileImage(imageUrl); // Set the object URL as the image source
       } catch (error) {
         console.error("Error fetching profile image:", error);
-        alert("Failed to fetch profile image.");
+        // alert("Failed to fetch profile image.");
       }
     };
 

@@ -15,6 +15,7 @@
     align-items: flex-start;
     padding: 40px;
     box-sizing: border-box;
+    /* margin-top:5rem; */
 
     /* Background image */
     background-image: url('C:\Users\nairy\reacter\React_jwt-auth__Hexa_Oct_24\public\ph1.avif'); /* Corrected path */
@@ -248,5 +249,25 @@
     border-color: red;
   }
   
+
+  /* Password strength styles */
+.password-strength {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.password-strength.weak {
+  color: red;
+}
+
+.password-strength.medium {
+  color: orange;
+}
+
+.password-strength.strong {
+  color: green;
+}
+
   
   
