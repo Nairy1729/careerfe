@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { getCompany } from "../Services/CompanyService"; 
+import { getCompany } from "../Services/CompanyService";
 import axios from "axios";
 import "./CompanyList.css";
 import { toast } from "react-toastify";
 import AdminJobs from "./AdminJobs";
-import { useNavigate } from "react-router-dom"; 
-import Modal from "react-modal"; // Import react-modal
-import EditCompany  from "./EditCompany";
+import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import EditCompany from "./EditCompany";
 import AdminDash from "./AdminDash";
 
-
-
 const CompanyList = () => {
-  const [latestCompany, setLatestCompany] = useState(null); 
-  const [loading, setLoading] = useState(true); 
-  const [showJobForm, setShowJobForm] = useState(false); 
+  const [latestCompany, setLatestCompany] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showJobForm, setShowJobForm] = useState(false);
   const [jobDetails, setJobDetails] = useState({
     title: "",
     description: "",
     salary: "",
     requirements: "",
   });
-
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedCompanyId, setSelectedCompanyId] = useState(null);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleEdit = (companyId) => {
-    setSelectedCompanyId(companyId); // Set the selected company ID
-    setShowEditModal(true); // Open the edit modal
+    setSelectedCompanyId(companyId);
+    setShowEditModal(true);
   };
-  const [error, setError] = useState(null); 
-  const navigate = useNavigate();
 
   // Fetch company data when the component mounts
   useEffect(() => {
@@ -66,8 +63,8 @@ const CompanyList = () => {
 
   const tokenExpired = (token) => {
     try {
-      const payload = JSON.parse(atob(token.split(".")[1])); 
-      return Date.now() >= payload.exp * 1000; 
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return Date.now() >= payload.exp * 1000;
     } catch (error) {
       console.error("Invalid token format:", error);
       return true;
@@ -82,12 +79,12 @@ const CompanyList = () => {
 
       if (!token || tokenExpired(token)) {
         toast.error("Session expired. Please log in again.");
-        window.location.href = "/login"; 
+        window.location.href = "/login";
         return;
       }
 
       const jobPayload = {
-        id: 0, 
+        id: 0,
         title: jobDetails.title,
         description: jobDetails.description,
         salary: parseFloat(jobDetails.salary),
@@ -106,12 +103,12 @@ const CompanyList = () => {
       });
 
       toast.success("Job posted successfully!");
-      setShowJobForm(false); 
+      setShowJobForm(false);
     } catch (err) {
       console.error("Job posting failed:", err.response?.data || err.message);
       if (err.response?.status === 401) {
         toast.error("Authentication failed. Please log in again.");
-        window.location.href = "/login"; 
+        window.location.href = "/login";
       } else {
         setError(err.response?.data?.message || "Failed to post the job.");
       }
@@ -123,7 +120,14 @@ const CompanyList = () => {
   }
 
   if (!latestCompany) {
-    return <p>No companies found.</p>;
+    return (
+      <>
+      <div className="company-dash-register">
+        <p>No Company found</p>
+        <AdminDash />
+      </div>
+      </>
+    );
   }
 
   return (
@@ -146,23 +150,21 @@ const CompanyList = () => {
           </a>
         </p>
         <p>Location: {latestCompany.location}</p>
-        <button onClick={() => handleEdit(latestCompany.id)}>
-          Edit Company
-        </button>
-
+        <button onClick={() => handleEdit(latestCompany.id)}>Edit Company</button>
         <button onClick={() => setShowJobForm(true)}>Post Job</button>
       </div>
-      <div><AdminDash/></div>
-      <div><AdminJobs /></div>
+
+      <AdminDash />
+      <AdminJobs />
 
       {/* Modal for Job Posting */}
       <Modal
         isOpen={showJobForm}
         onRequestClose={() => setShowJobForm(false)}
         contentLabel="Post Job"
-        ariaHideApp={false} // To prevent issues with React Modal in some environments
-        className="modal" // You can style the modal with your own CSS
-        overlayClassName="modal-overlay" // Style the overlay if needed
+        ariaHideApp={false}
+        className="modal"
+        overlayClassName="modal-overlay"
       >
         <form onSubmit={handlePostJob} className="job-form">
           <div>
@@ -210,6 +212,8 @@ const CompanyList = () => {
           </button>
         </form>
       </Modal>
+
+      {/* Modal for Editing Company */}
       <Modal
         isOpen={showEditModal}
         onRequestClose={() => setShowEditModal(false)}
@@ -220,7 +224,7 @@ const CompanyList = () => {
       >
         <EditCompany
           companyId={selectedCompanyId}
-          onClose={() => setShowEditModal(false)} // Close modal handler
+          onClose={() => setShowEditModal(false)}
         />
       </Modal>
     </div>

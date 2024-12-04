@@ -68,6 +68,7 @@ body {
 
 /* Button Group */
 .button-group {
+  gap : 7px ;
   display: flex;
   justify-content: space-evenly;
   margin-left:-1rem ;

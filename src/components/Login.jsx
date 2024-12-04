@@ -51,6 +51,7 @@ const Login = () => {
 
       toast.success("Login Successful!");
       navigate(role === "Admin" ? "/company" : "/userDash");
+      window.location.reload();
     } catch (error) {
       if (error.response) {
         const { status } = error.response;

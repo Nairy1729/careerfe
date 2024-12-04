@@ -23,7 +23,7 @@ const EditCompany = ({ companyId, onClose }) => {
         const response = await axios.get(
           `https://localhost:7060/api/Company/${companyId}`
         );
-        setCompanyDetails(response.data);
+        // setCompanyDetails(response.data);
       } catch (err) {
         console.error("Failed to fetch company details:", err);
         setError("Failed to fetch company details.");
@@ -113,18 +113,24 @@ const EditCompany = ({ companyId, onClose }) => {
             className="form-input"
           />
         </div>
-        <div className="form-buttons">
-          <button type="submit" className="btn btn-primary">
-            Update Company
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-        </div>
+        <div className="form-buttons" style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
+        
+  <button
+    type="submit"
+    style={{ flex: 1, padding: '10px', textAlign: 'center' , height:'2rem' , backgroundColor:'blue'}}
+  >
+    Update Company
+  </button>
+  <button
+    type="button"
+    onClick={onClose}
+    style={{ flex: 1, padding: '10px', textAlign: 'center' ,height:'2rem' , backgroundColor:'grey' }}
+  >
+    Cancel
+  </button>
+</div>
+
+
       </form>
     </div>
   );

@@ -10,6 +10,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.company-dash-register {
+  margin-top: 10rem;
+}
+
 /* Styling for the company card */
 .company-card {
   margin-top: 10rem;
@@ -168,4 +172,22 @@
   to {
     opacity: 1;
   }
+}
+
+.company-dash-register {
+  margin-left: 30rem;
+  text-align: center;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  max-width: 400px;
+  width: 100%;
+}
+
+.company-dash-register p {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20px;
 }

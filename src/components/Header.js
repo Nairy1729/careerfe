@@ -38,15 +38,15 @@ const Header = () => {
             </>
           ) : (
             <>
-                {role === 'Admin' ? (
-                  <li>
-                    <Link to="/company">Employer Section</Link>
-                  </li>
-                ) : (
-                  <li>
-                    <Link to="/userDash">JobSeeker Section</Link>
-                  </li>
-                )}
+      {role === "Admin" ? (
+        <li>
+          <Link to="/company">Employer Section</Link>
+        </li>
+      ) : (
+        <li>
+          <Link to="/userDash">JobSeeker Section</Link>
+        </li>
+      )}
               <div>
                 <ProfileMenu /> 
               </div>

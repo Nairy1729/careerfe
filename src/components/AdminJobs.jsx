@@ -104,6 +104,7 @@ const AdminJobs = () => {
         contentLabel="Update Job"
         className="modal"
         overlayClassName="overlay"
+        style={{height : '80vh'}}
       >
         {selectedJob && (
           <UpdateJob

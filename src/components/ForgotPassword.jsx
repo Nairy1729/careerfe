@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import "./ForgotPassword.css";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = ({ isModalOpen, setIsModalOpen }) => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate() ;
 
   const handleForgotPassword = async () => {
     setLoading(true);
@@ -20,6 +22,7 @@ const ForgotPassword = ({ isModalOpen, setIsModalOpen }) => {
 
       if (response.status === 200) {
         setMessage("Password reset link has been sent to your email.");
+        navigate("/resetPassword");
       } else {
         setMessage("Something went wrong. Please try again.");
       }

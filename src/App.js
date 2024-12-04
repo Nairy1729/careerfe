@@ -18,6 +18,7 @@ import AdminDash from "./components/AdminDash"; // Import AdminDash component
 // import RegisterCompany from "./components/RegisterCompany";
 import ContactUs from "./components/ContactUs";
 import AboutUs from "./components/AboutUs";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/company" element={<CompanyList />} />
             <Route path="/userDash" element={<UserDash />} />
             <Route path="/adminDash" element={<AdminDash />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
             {/* <Route path="/register-company" element={<RegisterCompany />} /> */}
     
         </Routes>
