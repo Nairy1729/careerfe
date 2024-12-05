@@ -6,7 +6,6 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <main>
-      {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
           <h1>Welcome to CareerCrafter</h1>
@@ -15,7 +14,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Services Section */}
       <section className="services-section">
         <h2>Our Core Features</h2>
         <div className="service-cards">
@@ -38,7 +36,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Jobs Section */}
       <section className="featured-jobs-section">
         <h2>Explore Job Categories</h2>
         <div className="job-categories">
@@ -61,7 +58,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Success Stories Section */}
       <section className="success-stories-section">
         <h2>Success Stories</h2>
         <div className="story-cards">

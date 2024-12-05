@@ -29,7 +29,6 @@ const CompanyList = () => {
     setShowEditModal(true);
   };
 
-  // Fetch company data when the component mounts
   useEffect(() => {
     const fetchCompany = async () => {
       try {
@@ -157,7 +156,6 @@ const CompanyList = () => {
       <AdminDash />
       <AdminJobs />
 
-      {/* Modal for Job Posting */}
       <Modal
         isOpen={showJobForm}
         onRequestClose={() => setShowJobForm(false)}
@@ -213,7 +211,6 @@ const CompanyList = () => {
         </form>
       </Modal>
 
-      {/* Modal for Editing Company */}
       <Modal
         isOpen={showEditModal}
         onRequestClose={() => setShowEditModal(false)}

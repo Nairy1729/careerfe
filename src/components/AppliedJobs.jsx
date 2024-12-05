@@ -9,12 +9,10 @@ const AppliedJobs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Function to fetch applied jobs
   const fetchAppliedJobs = async () => {
     try {
       const token = localStorage.getItem('token');
       
-      // Check if the token is available
       if (!token) {
         setError('No authorization token found');
         setLoading(false);
@@ -29,7 +27,6 @@ const AppliedJobs = () => {
 
       const response = await axios.get('https://localhost:7060/api/Jobs/applied-jobs', config);
 
-      // Check if the response data has the expected structure
       if (response.data && response.data.applications) {
         setJobs(response.data.applications);
       } else {
@@ -43,18 +40,15 @@ const AppliedJobs = () => {
     }
   };
 
-  // Fetch applied jobs when component mounts
   useEffect(() => {
     fetchAppliedJobs();
   }, []);
 
-  // Function to handle job withdrawal
   const handleWithdraw = async (jobId) => {
-    // Ask the user for confirmation before withdrawing the job
     const confirmation = window.confirm('Are you sure you want to withdraw from this job?');
 
     if (!confirmation) {
-      return; // Exit if the user does not confirm
+      return; 
     }
 
     const token = localStorage.getItem('token');
@@ -71,11 +65,9 @@ const AppliedJobs = () => {
         },
       };
 
-      // Call the withdraw API for the selected job
       const response = await axios.delete(`https://localhost:7060/api/Jobs/${jobId}/withdraw`, config);
       
       if (response.status === 200) {
-        // If the withdrawal is successful, re-fetch applied jobs and show success toast
         fetchAppliedJobs();
         toast.success('Job withdrawn successfully!');
       } else {
@@ -102,7 +94,6 @@ const AppliedJobs = () => {
         <ul>
           {jobs.map((job) => (
             <li key={job.id}>
-              {/* <strong>Job ID:</strong> {job.jobId} <br /> */}
               <strong>Job Title:</strong> {job.jobTitle} <br />
               <strong>Job Description:</strong>{job.jobDescription} <br />
               <string>Salary:</string>{job.jobSalary} <br />

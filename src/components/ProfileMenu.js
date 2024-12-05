@@ -101,7 +101,7 @@ const ProfileMenu = () => {
           </li>
         </ul>
       </div>
-      {/* Render the ProfileModal */}
+
       {isModalOpen && (
         <ProfileModal
           isOpen={isModalOpen}

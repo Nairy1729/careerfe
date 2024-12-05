@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../AuthContext";
-import ProfileMenu from "./ProfileMenu"; // Import your ProfileMenu component
-import './Header.css'; // Import the new Header.css
+import ProfileMenu from "./ProfileMenu"; 
+import './Header.css'; 
 
 const Header = () => {
   const { auth } = useContext(AuthContext);
@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <header>
       <div className="logo">
-        {/* Logo image */}
+        
         <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Career Crafter Logo" />
       </div>
       <nav>

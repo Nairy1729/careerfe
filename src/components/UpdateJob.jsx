@@ -25,10 +25,10 @@ const UpdateJob = ({ job, onUpdate, onClose }) => {
         title,
         description,
         salary: parseInt(salary, 10),
-        createdAt: job.createdAt, // Include the original creation date
+        createdAt: job.createdAt, 
         companyId: job.companyId,
         createdById: job.createdById,
-        requirements: requirements.split(",").map((req) => req.trim()), // Convert comma-separated string to array
+        requirements: requirements.split(",").map((req) => req.trim()), 
         requirementsString: requirements,
       };
 
@@ -45,8 +45,8 @@ const UpdateJob = ({ job, onUpdate, onClose }) => {
 
       if (response.status === 200) {
         toast.success("Job updated successfully!");
-        onUpdate(response.data); // Notify the parent component of the updated job
-        onClose(); // Close the update form
+        onUpdate(response.data);
+        onClose(); 
       }
     } catch (err) {
       console.error("Failed to update job:", err.response?.data || err.message);

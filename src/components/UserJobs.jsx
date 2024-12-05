@@ -5,12 +5,11 @@ import "./UserJobs.css";
 import SearchJobs from "./SearchJobs";
 
 const UserJobs = () => {
-  const [jobs, setJobs] = useState([]); // Jobs list
-  const [allJobs, setAllJobs] = useState([]); // All jobs list (for search)
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [jobs, setJobs] = useState([]); 
+  const [allJobs, setAllJobs] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
-  // Fetch jobs when component loads
   useEffect(() => {
     const fetchUserJobs = async () => {
       try {
@@ -31,8 +30,8 @@ const UserJobs = () => {
         );
 
         if (Array.isArray(response.data.jobs)) {
-          setJobs(response.data.jobs); // Update jobs state
-          setAllJobs(response.data.jobs); // Store all jobs for searching
+          setJobs(response.data.jobs); 
+          setAllJobs(response.data.jobs); 
         } else {
           setError("Unexpected API response format.");
         }
@@ -44,9 +43,8 @@ const UserJobs = () => {
     };
 
     fetchUserJobs();
-  }, []); // Initial jobs fetch
+  }, []); 
 
-  // Handle Apply for job
   const handleApply = async (jobId) => {
     try {
       const token = localStorage.getItem("token");
@@ -61,20 +59,17 @@ const UserJobs = () => {
       );
       toast.success("Successfully applied for the job!");
 
-      // Remove the job from jobs list after applying
       setJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId));
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to apply for the job.");
     }
   };
 
-  // If loading, show loading message
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <>
-      {/* Pass setJobs and allJobs to SearchJobs */}
       <div className="user-jobs">
 
         <h2>Jobs For You</h2>

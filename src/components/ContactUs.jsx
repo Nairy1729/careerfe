@@ -7,7 +7,6 @@ import "./ContactUs.css";
 function ContactForm() {
   const [state, handleSubmit] = useForm("xdkoywzp");
 
-  // Display a toast when the form is submitted successfully
   React.useEffect(() => {
     if (state.succeeded) {
       toast.success("Thanks for reaching out! We'll get back to you shortly.");

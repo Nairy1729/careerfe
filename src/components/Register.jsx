@@ -16,7 +16,7 @@ const Register = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
-  const [usernameAvailable, setUsernameAvailable] = useState(null); // Null: Not checked, true: Available, false: Taken
+  const [usernameAvailable, setUsernameAvailable] = useState(null); 
 
   const navigate = useNavigate();
 
@@ -200,10 +200,6 @@ const Register = () => {
               <p className={`password-strength ${passwordStrength.toLowerCase()}`}>
                 Password Strength: {passwordStrength}
               </p>
-              {/* <p className="password-requirements">
-                Password must be at least 8 characters long and include:
-                uppercase, lowercase, number, and special character.
-              </p> */}
             </div>
 
             <div className="form-group">

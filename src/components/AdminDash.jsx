@@ -3,19 +3,18 @@ import RegisterCompany from "./RegisterCompany";
 import "./AdminDash.css";
 
 const AdminDash = () => {
-  const [showModal, setShowModal] = useState(false); // State to toggle the modal
+  const [showModal, setShowModal] = useState(false); 
 
   const handleOpenModal = () => {
-    setShowModal(true); // Show the modal
+    setShowModal(true); 
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Hide the modal
+    setShowModal(false); 
   };
 
   return (
     <div className="admin-dash">
-      {/* <h1>Welcome to Admin Dashboard</h1> */}
       <button onClick={handleOpenModal} className="btn btn-primary">
         Register Company
       </button>

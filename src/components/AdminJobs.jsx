@@ -7,17 +7,15 @@ import JobApplicants from "./JobApplicants";
 import Modal from "react-modal";
 import "./AdminJobs.css" ;
 
-// Set up modal styling
 Modal.setAppElement("#root");
 
 const AdminJobs = () => {
-  const [jobs, setJobs] = useState([]); // Jobs list
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const [selectedJob, setSelectedJob] = useState(null); // Job to update
-  const [viewApplicantsJobId, setViewApplicantsJobId] = useState(null); // Job ID to view applicants
+  const [jobs, setJobs] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+  const [selectedJob, setSelectedJob] = useState(null); 
+  const [viewApplicantsJobId, setViewApplicantsJobId] = useState(null); 
 
-  // Fetch jobs posted by the admin
   useEffect(() => {
     const fetchUserJobs = async () => {
       try {
@@ -52,14 +50,12 @@ const AdminJobs = () => {
     fetchUserJobs();
   }, []);
 
-  // Handle job update
   const handleUpdate = (updatedJob) => {
     setJobs((prevJobs) =>
       prevJobs.map((job) => (job.id === updatedJob.id ? updatedJob : job))
     );
   };
 
-  // Handle job deletion
   const handleDelete = (deletedJobId) => {
     setJobs((prevJobs) => prevJobs.filter((job) => job.id !== deletedJobId));
   };
@@ -97,7 +93,7 @@ const AdminJobs = () => {
         ))}
       </div>
 
-      {/* UpdateJob Modal */}
+      
       <Modal
         isOpen={!!selectedJob}
         onRequestClose={() => setSelectedJob(null)}
@@ -115,7 +111,7 @@ const AdminJobs = () => {
         )}
       </Modal>
 
-      {/* JobApplicants Modal */}
+      
       <Modal
         isOpen={!!viewApplicantsJobId}
         onRequestClose={() => setViewApplicantsJobId(null)}

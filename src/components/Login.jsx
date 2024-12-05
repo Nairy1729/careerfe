@@ -6,7 +6,7 @@ import { usePersonContext } from "../Services/PersonContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./Login.css";
-import ForgotPassword from "./ForgotPassword"; // Reusable modal component
+import ForgotPassword from "./ForgotPassword"; 
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -18,7 +18,6 @@ const Login = () => {
   const { setUserInfo } = usePersonContext();
   const navigate = useNavigate();
 
-  // Redirect if already logged in
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const role = localStorage.getItem("role");
@@ -129,7 +128,7 @@ const Login = () => {
               href="#"
               className="forgot-password-button"
               onClick={(e) => {
-                e.preventDefault(); // Prevents page reload
+                e.preventDefault(); 
                 setForgotPasswordOpen(true);
               }}
             >
@@ -149,7 +148,6 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Forgot Password Modal */}
       {isForgotPasswordOpen && (
         <ForgotPassword
           isModalOpen={isForgotPasswordOpen}

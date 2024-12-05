@@ -42,14 +42,13 @@ const GetProfileModal = ({ isOpen, onClose }) => {
           Authorization: `Bearer ${token}`,
           Accept: "application/pdf",
         },
-        responseType: "blob", // Important for downloading files
+        responseType: "blob",
       });
 
-      // Create a blob URL for the file and download it
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "resume.pdf"); // Default file name
+      link.setAttribute("download", "resume.pdf"); 
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

@@ -5,16 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 import "./SearchJobs.css";
 
 const SearchJobs = ({ setJobs, allJobs }) => {
-  const [searchQuery, setSearchQuery] = useState(""); // Search query state
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(null); 
 
-  // Handle search function
   const handleSearch = async (e) => {
     e.preventDefault();
 
     if (!searchQuery) {
-      // If search query is empty, show all jobs
       setJobs(allJobs);
       return;
     }
@@ -37,16 +35,15 @@ const SearchJobs = ({ setJobs, allJobs }) => {
         },
       };
 
-      // API request for job search
       const response = await axios.get(
         `https://localhost:7060/api/Jobs/search?query=${searchQuery}`,
         config
       );
 
       if (response.data && response.data.jobs) {
-        setJobs(response.data.jobs); // Update parent state with the jobs
+        setJobs(response.data.jobs); 
       } else {
-        setJobs([]); // No jobs found
+        setJobs([]); 
       }
     } catch (err) {
       setError("Failed to search jobs");

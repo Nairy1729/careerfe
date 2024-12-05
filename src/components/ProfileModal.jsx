@@ -41,7 +41,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
         },
       });
       alert("Profile submitted successfully!");
-      onClose(); // Close the modal after successful submission
+      onClose(); 
     } catch (error) {
       console.error("Error submitting profile:", error);
       alert("Failed to submit profile. Please try again.");

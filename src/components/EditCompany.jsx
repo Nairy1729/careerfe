@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "./EditCompany.css"; // Import the CSS file
+import "./EditCompany.css"; 
 
 const EditCompany = ({ companyId, onClose }) => {
   const [companyDetails, setCompanyDetails] = useState({
@@ -48,7 +48,7 @@ const EditCompany = ({ companyId, onClose }) => {
         companyDetails
       );
       toast.success("Company updated successfully!");
-      onClose(); // Close the modal on success
+      onClose(); 
     } catch (err) {
       console.error("Failed to update company:", err);
       setError("Failed to update company.");
@@ -115,19 +115,52 @@ const EditCompany = ({ companyId, onClose }) => {
         </div>
         <div className="form-buttons" style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
         
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', margin: '20px 0' }}>
   <button
     type="submit"
-    style={{ flex: 1, padding: '10px', textAlign: 'center' , height:'2rem' , backgroundColor:'blue'}}
+    style={{
+      flex: 1,
+      padding: '10px',
+      textAlign: 'center',
+      height: '2.5rem',
+      backgroundColor: 'blue',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      fontSize: '16px',
+      fontWeight: 'bold',
+      transition: 'background-color 0.3s ease',
+    }}
+    onMouseEnter={(e) => (e.target.style.backgroundColor = 'darkblue')}
+    onMouseLeave={(e) => (e.target.style.backgroundColor = 'blue')}
   >
-    Update Company
+    Update
   </button>
   <button
     type="button"
     onClick={onClose}
-    style={{ flex: 1, padding: '10px', textAlign: 'center' ,height:'2rem' , backgroundColor:'grey' }}
+    style={{
+      flex: 1,
+      padding: '10px',
+      textAlign: 'center',
+      height: '2.5rem',
+      backgroundColor: '#0056B3',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      fontSize: '16px',
+      fontWeight: 'bold',
+      transition: 'background-color 0.3s ease',
+    }}
+    onMouseEnter={(e) => (e.target.style.backgroundColor = 'darkgrey')}
+    onMouseLeave={(e) => (e.target.style.backgroundColor = 'grey')}
   >
     Cancel
   </button>
+</div>
+
 </div>
 
 

@@ -4,15 +4,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./JobApplicants.css";
 
-// Postmark API Key
-// const POSTMARK_API_KEY = "08cac149-9c77-4db9-9b28-0a64a2317e9e";
+
 
 const JobApplicants = ({ jobId }) => {
-  const [applicants, setApplicants] = useState([]); // Store applicants list
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [applicants, setApplicants] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
-  // Fetch applicants when the component mounts
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
@@ -45,15 +43,13 @@ const JobApplicants = ({ jobId }) => {
     };
 
     fetchApplicants();
-  }, [jobId]); // Dependency on jobId to re-fetch if jobId changes
+  }, [jobId]); 
 
-  // If loading, show loading message
+
   if (loading) return <p>Loading applicants...</p>;
 
-  // If error, show error message
   if (error) return <p>{error}</p>;
 
-  // Function to handle resume download
   const handleResumeDownload = async (applicantId) => {
     const token = localStorage.getItem("token");
 
@@ -65,15 +61,14 @@ const JobApplicants = ({ jobId }) => {
             Authorization: `Bearer ${token}`,
             Accept: "application/pdf",
           },
-          responseType: "blob", // Important for downloading files
+          responseType: "blob", 
         }
       );
 
-      // Create a blob URL for the file and download it
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "resume.pdf"); // Default file name
+      link.setAttribute("download", "resume.pdf"); 
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -83,30 +78,6 @@ const JobApplicants = ({ jobId }) => {
     }
   };
 
-  // Function to send email via Postmark
-//   const sendEmail = async (recipientEmail, applicantName, status) => {
-//     try {
-//       const response = await axios.post(
-//         "https://api.postmarkapp.com/email",
-//         {
-//           From: "narendra.2020@vitstudent.ac.in",
-//           To: "narendra.2020@vitstudent.ac.in",
-//           Subject: `Your Application Status: ${status}`,
-//           TextBody: `Dear ${applicantName},\n\nYour application status has been updated to ${status}.\n\nBest regards,\nCompany Name`,
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${POSTMARK_API_KEY}`,
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       );
-//       console.log("Email sent successfully:", response.data);
-//     } catch (error) {
-//       console.error("Error sending email:", error);
-//       toast.error("Failed to send email notification.");
-//     }
-//   };
 
   const handleStatusUpdate = async (applicantId, jobId, status, applicantEmail, applicantName) => {
     const token = localStorage.getItem("token");
@@ -114,18 +85,17 @@ const JobApplicants = ({ jobId }) => {
     try {
       const response = await axios.patch(
         `https://localhost:7060/api/Jobs/update-status?applicantId=${applicantId}&jobId=${jobId}`,
-        `"${status}"`, // Status as string in the request body
+        `"${status}"`, 
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json", // Ensure proper content type for JSON
+            "Content-Type": "application/json", 
           },
         }
       );
 
       if (response.data.success) {
         toast.success("Status updated successfully , and mailed to applicant!");
-        // Optionally, re-fetch applicants to reflect the updated status
         setApplicants((prevApplicants) =>
           prevApplicants.map((applicant) =>
             applicant.applicantId === applicantId && applicant.jobId === jobId
@@ -133,8 +103,6 @@ const JobApplicants = ({ jobId }) => {
               : applicant
           )
         );
-        // Send email to the applicant about the status update
-        // await sendEmail(applicantEmail, applicantName, status);
       } else {
         toast.error(response.data.message || "Failed to update status.");
       }

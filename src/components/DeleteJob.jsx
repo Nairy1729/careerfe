@@ -28,7 +28,7 @@ const DeleteJob = ({ jobId, onDelete }) => {
 
       if (response.status === 200) {
         toast.success("Job deleted successfully!");
-        onDelete(jobId); // Notify the parent component to update the UI
+        onDelete(jobId); 
       }
     } catch (err) {
       console.error("Failed to delete job:", err.response?.data || err.message);
