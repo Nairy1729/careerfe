@@ -1,9 +1,8 @@
 import axios from "axios";
 
-// Centralize API URL
+
 const API_URL = "https://localhost:7060/api/Authentication";
 
-// Login function
 const login = async (username, password) => {
   try {
     console.log("service called");
@@ -17,9 +16,7 @@ const login = async (username, password) => {
     console.log(`response: ${JSON.stringify(response.data)}`);
     const token = response.data.token;
 
-    // Check if token exists in response
     if (token) {
-      // Save the token in localStorage
       localStorage.setItem("token", token);
       return token;
     } else {
@@ -47,10 +44,10 @@ const getProtectedData = async () => {
       },
     });
 
-    return response.data; // Return the response data (protected content)
+    return response.data; 
   } catch (error) {
     console.error("Error fetching protected data:", error);
-    throw error; // Rethrow the error to handle in the frontend
+    throw error; 
   }
 };
 
