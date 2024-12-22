@@ -57,13 +57,19 @@ const UserJobs = () => {
           },
         }
       );
-      toast.success("Successfully applied for the job!");
-
-      setJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId));
+  
+      if (response.status === 200 || response.status === 201) {
+        toast.success("Successfully applied for the job!");
+        setJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId));
+      } else {
+        throw new Error("Unexpected response status");
+      }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to apply for the job.");
+      const errorMessage = err.response?.data?.message || "Failed to apply for the job.";
+      toast.error(errorMessage);
     }
   };
+  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;

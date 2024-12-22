@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import "./ResetPassword.css"; 
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const navigate = useNavigate() ;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,14 +24,14 @@ const ResetPassword = () => {
       });
 
       if (response.ok) {
-        setMessage("Password reset successfully!");
-        navigate("/login") ;
+        toast.success("Password reset successfully!");
+        setTimeout(() => navigate("/login"), 2000); // Navigate to login after 2 seconds
       } else {
-        setMessage("Failed to reset password. Please try again.");
+        toast.error("Failed to reset password. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
-      setMessage("An error occurred. Please try again later.");
+      toast.error("An error occurred. Please try again later.");
     }
   };
 
@@ -75,7 +76,7 @@ const ResetPassword = () => {
           Reset Password
         </button>
       </form>
-      {message && <p className="message">{message}</p>}
+      <ToastContainer />
     </div>
   );
 };
