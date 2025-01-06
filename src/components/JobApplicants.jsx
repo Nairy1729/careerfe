@@ -4,12 +4,12 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./JobApplicants.css";
 
-
-
 const JobApplicants = ({ jobId }) => {
-  const [applicants, setApplicants] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const [applicants, setApplicants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [logoPosition, setLogoPosition] = useState(-100); // Logo initial position off-screen
+  const [isProcessing, setIsProcessing] = useState(false); // For processing state
 
   useEffect(() => {
     const fetchApplicants = async () => {
@@ -43,12 +43,33 @@ const JobApplicants = ({ jobId }) => {
     };
 
     fetchApplicants();
-  }, [jobId]); 
+  }, [jobId]);
 
+  useEffect(() => {
+    let timer;
+    if (isProcessing) {
+      // Start logo animation when processing starts
+      timer = setInterval(() => {
+        setLogoPosition((prevPosition) => {
+          if (prevPosition >= window.innerWidth) {
+            clearInterval(timer); // Stop the animation after logo reaches the right edge
+            sendEmail(); // Trigger email sending after animation
+            return prevPosition;
+          }
+          return prevPosition + 5; // Move 5px every interval
+        });
+      }, 30); // Update every 30ms
+    }
 
-  if (loading) return <p>Loading applicants...</p>;
+    return () => clearInterval(timer); // Cleanup timer when component unmounts
+  }, [isProcessing]);
 
-  if (error) return <p>{error}</p>;
+  const sendEmail = () => {
+    setTimeout(() => {
+      //toast.success("Email sent to the applicant!");
+      setIsProcessing(false); // End processing state and reset logo
+    }, 3000); // Simulate email sending delay (3 seconds)
+  };
 
   const handleResumeDownload = async (applicantId) => {
     const token = localStorage.getItem("token");
@@ -61,14 +82,14 @@ const JobApplicants = ({ jobId }) => {
             Authorization: `Bearer ${token}`,
             Accept: "application/pdf",
           },
-          responseType: "blob", 
+          responseType: "blob", // Handle the PDF as a blob
         }
       );
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "resume.pdf"); 
+      link.setAttribute("download", "resume.pdf"); // Download the file as resume.pdf
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -78,24 +99,26 @@ const JobApplicants = ({ jobId }) => {
     }
   };
 
-
   const handleStatusUpdate = async (applicantId, jobId, status, applicantEmail, applicantName) => {
     const token = localStorage.getItem("token");
+
+    // Start processing and animation when status is being updated
+    setIsProcessing(true);
 
     try {
       const response = await axios.patch(
         `https://localhost:7060/api/Jobs/update-status?applicantId=${applicantId}&jobId=${jobId}`,
-        `"${status}"`, 
+        `"${status}"`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json", 
+            "Content-Type": "application/json",
           },
         }
       );
 
       if (response.data.success) {
-        toast.success("Status updated successfully , and mailed to applicant!");
+        toast.success("Status updated successfully, and mailed to applicant!");
         setApplicants((prevApplicants) =>
           prevApplicants.map((applicant) =>
             applicant.applicantId === applicantId && applicant.jobId === jobId
@@ -111,6 +134,10 @@ const JobApplicants = ({ jobId }) => {
       toast.error(error.response?.data?.message || "Failed to update status. Please try again.");
     }
   };
+
+  if (loading) return <p>Loading applicants...</p>;
+
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="job-applicants">
@@ -147,6 +174,24 @@ const JobApplicants = ({ jobId }) => {
           <p>No applicants found for this job.</p>
         )}
       </div>
+
+      {isProcessing && (
+  <div
+    className="logo"
+    style={{
+      position: "absolute",
+      left: `${logoPosition}px`,
+      top: "5%",
+      transform: "translateY(-5%)",
+      transition: "left 0.03s linear",
+      width: "50px", // Adjust width as needed
+      height: "50px", // Adjust height as needed
+    }}
+  >
+    <img src="paper-plane.png" alt="Logo" style={{ width: "100%", height: "100%" }} />
+  </div>
+)}
+
     </div>
   );
 };
